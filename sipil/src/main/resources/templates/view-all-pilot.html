@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Daftar Pilot</title>
+</head>
+<body>
+<h2>Daftar Pilot</h2>
+<div th:each="pilot: ${listPilot}">
+    <h3 th:text="'Nama: '+ ${pilot.nama}"></h3>
+    <h3 th:text="'NIP: '+ ${pilot.nip}"></h3>
+    <h3 th:text="'NIK: '+ ${pilot.nik}"></h3>
+    <h3 th:text="'Tanggal Lahir : '+ ${#dates.format(pilot.tanggalLahir, 'dd/MM/yyyy')}"></h3>
+    <h3 th:if="${pilot.jenisKelamin == 1}">Jenis kelamin: Laki-laki</h3>
+    <h3 th:if="${pilot.jenisKelamin == 2}">Jenis kelamin: Perempuan</h3>
+</div>
+<a href="/">Kembali</a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Detail Pilot</title>
+</head>
+<body>
+    <section>
+        <h2>Detail Pilot</h2>
+        <h3 th:text="'Id : '+ ${pilot.id}"></h3>
+        <h3 th:text="'Nama : '+ ${pilot.nama}"></h3>
+        <h3 th:text="'NIK : '+ ${pilot.nik}"></h3>
+        <h3 th:if="${pilot.jenisKelamin == 1}">Jenis kelamin: Laki-laki</h3>
+        <h3 th:if="${pilot.jenisKelamin == 2}">Jenis kelamin: Perempuan</h3>
+        <h3 th:text="'NIP : '+ ${pilot.nip}"></h3>
+        <h3 th:text="'Tempat Lahir : '+ ${pilot.tempatLahir}"></h3>
+        <h3 th:text="'Tanggal Lahir : '+ ${#dates.format(pilot.tanggalLahir, 'dd/MM/yyyy')}"></h3>
+        <h3 th:text="'Sekolah : '+ ${pilot.akademi.nama}"></h3>
+        <h3 th:text="'Maskapai : '+ ${pilot.maskapai.nama}"></h3>
+<!--        <td><a th:href="@{/hotel/change?idHotel=}+${hotel.id}">Change Data Hotel</a></td>-->
+<!--        <td><a th:href="@{/hotel/delete?idHotel=}+${hotel.id}">Delete Hotel</a></td>-->
+    </section>
+</body>
+</html>

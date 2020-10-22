@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Form Tambah Penerbangan</title>
+</head>
+<body>
+<h3>Tambah Penerbangan</h3>
+<form th:action="@{/penerbangan/tambah}" th:objects="${penerbangan}" method="POST">
+    Kode : <br>
+    <input type="text" th:field="${penerbangan.kode}"/>
+    <br><br>
+    Waktu: <br>
+    <input type="datetime-local" th:field="${penerbangan.waktu}"/>
+    <br><br>
+    Kota Asal: <br>
+    <input type="text" th:field="${penerbangan.kotaAsal}"/>
+    <br><br>
+    Kota tujuan: <br>
+    <input type="text" th:field="${penerbangan.kotaTujuan}"/>
+    <br><br>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

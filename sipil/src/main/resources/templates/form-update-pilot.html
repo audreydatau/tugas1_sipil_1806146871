@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Form Ubah Pilot</title>
+</head>
+<body>
+    <h2>Ubah Pilot</h2>
+    <form th:action="@{/pilot/ubah/}+ ${pilot.nip}" th:objects="${pilot}" method="POST">
+        <input type="hidden" th:field="*{pilot.id}">
+        Nama : <br>
+        <input type="text" th:field="${pilot.nama}" th:value="*{pilot.nama}"/>
+        <br><br>
+        Nik: <br>
+        <input type="text" th:field="${pilot.nik}" th:value="*{pilot.nik}"/>
+        <br><br>
+        Tempat Lahir: <br>
+        <input type="text" th:field="${pilot.tempatLahir}" th:value="*{pilot.tempatLahir}"/>
+        <br><br>
+        Tanggal Lahir: <br>
+        <input type="date" th:field="${pilot.tanggalLahir}" th:value="*{pilot.tanggalLahir}"/>
+        <br><br>
+        Jenis Kelamin: <br>
+        <select th:field="${pilot.jenisKelamin}" th:value="*{pilot.jenisKelamin}">
+            <option value="1">Laki-laki</option>
+            <option value="2">Perempuan</option>
+        </select>
+        <br><br>
+        Sekolah: <br>
+        <select th:field="${pilot.akademi}" th:value="*{pilot.akademi.nama}">
+            <option th:each="sekolah : *{akademiList}" th:text="${sekolah.nama}" th:value="${sekolah.id}"></option>
+        </select>
+        <br><br>
+        Maskapai: <br>
+        <select th:field="${pilot.maskapai}" th:value="*{pilot.maskapai.nama}">
+            <option th:each="maskapai : *{maskapaiList}" th:text="${maskapai.nama}" th:value="${maskapai.id}"></option>
+        </select>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

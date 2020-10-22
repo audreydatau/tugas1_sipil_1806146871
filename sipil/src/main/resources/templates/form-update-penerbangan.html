@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Form Ubah Penerbangan</title>
+</head>
+<body>
+<h2>Ubah Penerbangan</h2>
+<form th:action="@{/penerbangan/ubah/}+ ${penerbangan.id}" th:objects="${penerbangan}" method="POST">
+    <input type="hidden" th:field="*{penerbangan.id}">
+    Kode : <br>
+    <input type="text" th:field="${penerbangan.kode}" th:value="*{penerbangan.kode}"/>
+    <br><br>
+    Waktu: <br>
+    <input type="datetime-local" th:field="${penerbangan.waktu}" th:value="*{penerbangan.waktu}"/>
+    <br><br>
+    Kota Asal: <br>
+    <input type="text" th:field="${penerbangan.kotaAsal}" th:value="*{penerbangan.kotaAsal}"/>
+    <br><br>
+    Kota tujuan: <br>
+    <input type="text" th:field="${penerbangan.kotaTujuan}" th:value="*{penerbangan.kotaTujuan}"/>
+    <br><br>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

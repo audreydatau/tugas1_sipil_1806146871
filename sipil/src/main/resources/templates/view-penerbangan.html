@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Detail Penerbangan</title>
+</head>
+<body>
+<section>
+    <h2>Detail Penerbangan</h2>
+    <h3 th:text="'Id : '+ ${penerbangan.id}"></h3>
+    <h3 th:text="'Kode penerbangan : '+ ${penerbangan.kode}"></h3>
+    <h3 th:text="'Waktu : '+ ${#dates.format(penerbangan.waktu, 'HH:mm, dd/MM/yyyy')}"></h3>
+    <h3 th:text="'Kota Asal : '+ ${penerbangan.kotaAsal}"></h3>
+    <h3 th:text="'Kota Tujuan : '+ ${penerbangan.kotaTujuan}"></h3>
+<!--    <h3 th:text="'Tanggal penugasan : '+ ${#dates.format(tanggalPenugasan, 'dd/MM/yyyy')}"></h3>-->
+</section>
+</body>
+</html>
