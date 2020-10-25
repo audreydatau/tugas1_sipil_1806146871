@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Transactional
@@ -91,6 +89,43 @@ public class PilotServiceImpl implements PilotService{
     @Override
     public void deletePilot(PilotModel pilot) {
         pilotDb.delete(pilot);
+    }
+
+    @Override
+    public PilotModel getPilotById(Long id) {
+        return pilotDb.findById(id).get();
+    }
+
+    @Override
+    public List<PilotModel> getPilotTerbaik(List<PilotModel> pilotList) {
+        HashMap<Integer,PilotModel> terbanyakMap = new HashMap<>();
+        ArrayList<Integer> terbanyakList = new ArrayList<>();
+
+        for (PilotModel pilot:pilotList){
+            int jumlahPenerbangan = pilot.getListPilotPenerbangan().size();
+            terbanyakList.add(jumlahPenerbangan);
+            terbanyakMap.put(jumlahPenerbangan,pilot);
+        }
+        Collections.sort(terbanyakList,Collections.reverseOrder());
+
+        List<PilotModel> result = new ArrayList<>();
+
+        if (terbanyakList.size()==1){
+            PilotModel pilot = terbanyakMap.get(terbanyakList.get(0));
+            result.add(pilot);
+        }else if (terbanyakList.size()==2){
+            for (int jumlah:terbanyakList){
+                PilotModel pilot = terbanyakMap.get(jumlah);
+                result.add(pilot);
+            }
+        }else if (terbanyakList.size()>=3){
+            for (int i=0;i<3;i++){
+                PilotModel pilot = terbanyakMap.get(terbanyakList.get(i));
+                result.add(pilot);
+            }
+        }
+
+        return result;
     }
 }
 

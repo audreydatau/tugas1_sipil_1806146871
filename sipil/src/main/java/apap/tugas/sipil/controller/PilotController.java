@@ -3,8 +3,10 @@ package apap.tugas.sipil.controller;
 import apap.tugas.sipil.model.AkademiModel;
 import apap.tugas.sipil.model.MaskapaiModel;
 import apap.tugas.sipil.model.PilotModel;
+import apap.tugas.sipil.model.PilotPenerbanganModel;
 import apap.tugas.sipil.service.AkademiService;
 import apap.tugas.sipil.service.MaskapaiService;
+import apap.tugas.sipil.service.PenerbanganService;
 import apap.tugas.sipil.service.PilotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,11 +14,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
 public class PilotController{
-    @Qualifier("pilotServiceImpl")
+    @Qualifier("penerbanganServiceImpl")
+    @Autowired
+    private PenerbanganService penerbanganService;
+
     @Autowired
     private PilotService pilotService;
 
@@ -59,6 +67,9 @@ public class PilotController{
             Model model
     ){
         PilotModel pilot=pilotService.getPilotByNip(nipPilot);
+        List<PilotPenerbanganModel> pilotPenerbanganList = pilot.getListPilotPenerbangan();
+
+        model.addAttribute("pilotPenerbanganList",pilotPenerbanganList);
         model.addAttribute("pilot", pilot);
 
         return "view-pilot";
@@ -109,5 +120,96 @@ public class PilotController{
         model.addAttribute("nip",nipPilot);
         return "delete-pilot";
     }
+
+    @GetMapping("/cari/pilot")
+    public String cariPilot(
+            @RequestParam(value ="kodeMaskapai",required = false)String kodeMaskapai,
+            @RequestParam(value = "idSekolah", required = false)Long idSekolah,
+            Model model
+    ){
+        List<PilotModel> pilotList = new ArrayList<>();
+        List<MaskapaiModel> maskapaiList = maskapaiService.getMaskapaiList();
+        List<AkademiModel> akademiList = akademiService.getAkademiList();
+
+        if (kodeMaskapai!=null && kodeMaskapai!=""){
+            pilotList = pilotService.getPilotList();
+            MaskapaiModel maskapai = maskapaiService.getMaskapaiByKode(kodeMaskapai);
+            List<PilotModel> tempList = new ArrayList<>(pilotList);
+            pilotList = new ArrayList<>();
+            for (PilotModel pilotModel:tempList){
+                if (maskapai == pilotModel.getMaskapai()){
+                    pilotList.add(pilotModel);
+                }
+            }
+        }
+        if (idSekolah!=null){
+            pilotList = pilotService.getPilotList();
+            AkademiModel akademi = akademiService.getAkademiById(idSekolah);
+            List<PilotModel> tempList = new ArrayList<>(pilotList);
+            pilotList = new ArrayList<>();
+            for (PilotModel pilotModel:tempList){
+                if (akademi==pilotModel.getAkademi()){
+                    pilotList.add(pilotModel);
+                }
+            }
+        }
+
+        model.addAttribute("pilotList",pilotList);
+        model.addAttribute("maskapaiList", maskapaiList);
+        model.addAttribute("akademiList", akademiList);
+
+        return "cari-pilot";
+    }
+
+    @GetMapping("/cari/pilot/penerbangan-terbanyak")
+    public String tigaTerbanyak(
+            @RequestParam(value = "kodeMaskapai", required = false) String kodeMaskapai,
+            Model model
+    ){
+        List<PilotModel> pilotList = new ArrayList<>();
+        List<MaskapaiModel> maskapaiList = maskapaiService.getMaskapaiList();
+        List<PilotModel> terbanyakList = new ArrayList<>();
+        HashMap<PilotModel,Integer> terbanyakMap = new HashMap<>();
+
+        if (kodeMaskapai!=null && kodeMaskapai!=""){
+            pilotList = pilotService.getPilotList();
+            MaskapaiModel maskapai = maskapaiService.getMaskapaiByKode(kodeMaskapai);
+            List<PilotModel> tempList = new ArrayList<>(pilotList);
+            pilotList = new ArrayList<>();
+            for (PilotModel pilotModel:tempList){
+                if (maskapai == pilotModel.getMaskapai()){
+                    pilotList.add(pilotModel);
+                }
+            }
+            terbanyakList = pilotService.getPilotTerbaik(pilotList);
+
+            for (PilotModel pilotModel:terbanyakList){
+                int total = pilotModel.getListPilotPenerbangan().size();
+                terbanyakMap.put(pilotModel,total);
+            }
+        }
+
+        model.addAttribute("maskapaiList", maskapaiList);
+        model.addAttribute("terbanyakList", terbanyakList);
+        model.addAttribute("terbanyakMap", terbanyakMap);
+
+        return "pilot-terbaik";
+    }
+
+    @GetMapping("/cari/pilot/bulan-ini")
+    public String pilotBulanIni(Model model){
+        List<PilotModel> pilotList = pilotService.getPilotList();
+        List<PilotModel> result = new ArrayList<>();
+
+        for (PilotModel pilot:pilotList){
+            if(penerbanganService.isPenerbanganBulanIni(pilot.getListPilotPenerbangan())){
+                result.add(pilot);
+            }
+        }
+
+        model.addAttribute("pilotList",result);
+        return "pilot-bulan-ini";
+    }
+
 
 }

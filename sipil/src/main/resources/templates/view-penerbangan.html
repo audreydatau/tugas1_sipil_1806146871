@@ -11,7 +11,39 @@
     <h3 th:text="'Waktu : '+ ${#dates.format(penerbangan.waktu, 'HH:mm, dd/MM/yyyy')}"></h3>
     <h3 th:text="'Kota Asal : '+ ${penerbangan.kotaAsal}"></h3>
     <h3 th:text="'Kota Tujuan : '+ ${penerbangan.kotaTujuan}"></h3>
-<!--    <h3 th:text="'Tanggal penugasan : '+ ${#dates.format(tanggalPenugasan, 'dd/MM/yyyy')}"></h3>-->
+    <h3 th:text="'Tanggal penugasan : '+ ${#dates.format(tanggalPenugasan, 'dd/MM/yyyy')}"></h3>
 </section>
+    <form th:object="${penerbangan}" th:action="@{/penerbangan/}+${penerbangan.id}+@{/pilot/tambah}" method="POST">
+        <input th:value="${penerbangan.id}" name="id" hidden>
+        <select name="pilot">
+            <label>--Pilih Nama Pilot--</label>
+            <option th:each="pilot : ${pilotList}" th:text="${pilot.nama}" th:value="${pilot.id}"></option>
+        </select>
+        <button>
+            <a>Submit</a>
+        </button>
+    </form>
+    <table class="table" style="margin-top: 20px">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Nama</th>
+            <th scope="col">NIP</th>
+            <th scope="col">Tanggal Lahir</th>
+            <th scope="col">Jenis Kelamin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "pilotPenerbangan, iterationStatus: ${pilotPenerbanganList}">
+            <th scope="row" th:text="${iterationStatus.count}"></th>
+            <td th:text ="${pilotPenerbangan.pilot.nama}"> </td>
+            <td th:text ="${pilotPenerbangan.pilot.nip}"> </td>
+            <td th:text ="${#dates.format(pilotPenerbangan.pilot.tanggalLahir, 'dd/MM/yyyy')}"> </td>
+            <td th:if="${pilotPenerbangan.pilot.jenisKelamin == 1}">Laki-laki</td>
+            <td th:if="${pilotPenerbangan.pilot.jenisKelamin == 2}">Perempuan</td>
+        </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>

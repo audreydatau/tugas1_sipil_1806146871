@@ -7,4 +7,6 @@ import java.util.List;
 public interface MaskapaiService {
     List<MaskapaiModel> getMaskapaiList();
 
+    MaskapaiModel getMaskapaiByKode(String kode);
+
 }

@@ -8,4 +8,5 @@ public interface AkademiService {
 
     List<AkademiModel> getAkademiList();
 
+    AkademiModel getAkademiById(Long id);
 }

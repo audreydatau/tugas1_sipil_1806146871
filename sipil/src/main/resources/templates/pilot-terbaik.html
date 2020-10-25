@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pilot Terbaik</title>
+</head>
+<body>
+<form th:action = "@{/cari/pilot/penerbangan-terbanyak}" method="GET">
+
+    <label>Pilih Kode Maskapai</label>
+
+    <select name="kodeMaskapai">
+        <option value="">Kode Maskapai</option>
+        <option th:each="maskapai : ${maskapaiList}" th:value="${maskapai.kode}" th:text="${maskapai.kode}"></option>
+    </select>
+
+    <button>Cari</button>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>NIP</th>
+        <th>Jumlah Penerbangan</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="terbanyak, iterationStatus :   ${terbanyakMap}">
+        <td><a th:text="${iterationStatus.count}"></a></td>
+        <td><a th:text="${terbanyak.key.nama}"></a></td>
+        <td><a th:text="${terbanyak.key.nip}"></a></td>
+        <td><a th:text="${terbanyak.value}"></a></td>
+    </tr>
+    </tbody>
+</table>
+<script>$(document).ready( function () {
+    $('.table').DataTable();
+} );</script>
+</body>
+</html>

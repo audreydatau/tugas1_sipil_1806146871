@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pilot Bulan Ini</title>
+</head>
+<body>
+<h2>Daftar Pilot Pada Penerbangan Bulan Ini</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>NIP</th>
+        <th>Tanggal Lahir</th>
+        <th>Jenis Kelamin</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pilot, iterationStatus :   ${pilotList}">
+        <td><a th:text="${iterationStatus.count}"></a></td>
+        <td th:text="${pilot.nama}"></td>
+        <td th:text="${pilot.nip}"></td>
+        <td th:text="${#dates.format(pilot.tanggalLahir, 'dd/MM/yyyy')}"></td>
+        <td th:if="${pilot.jenisKelamin == 1}" th:text="Laki-laki"></td>
+        <td th:if="${pilot.jenisKelamin == 2}" th:text="Perempuan"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

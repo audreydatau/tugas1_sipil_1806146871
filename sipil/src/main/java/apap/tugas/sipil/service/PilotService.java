@@ -20,4 +20,8 @@ public interface PilotService {
 
     void deletePilot(PilotModel pilot);
 
+    PilotModel getPilotById(Long id);
+
+    List<PilotModel> getPilotTerbaik(List<PilotModel> pilotList);
+
 }
