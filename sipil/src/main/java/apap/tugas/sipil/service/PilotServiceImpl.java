@@ -87,5 +87,10 @@ public class PilotServiceImpl implements PilotService{
     public PilotModel getPilotByNik(String nik) {
         return pilotDb.findAllByNik(nik).get();
     }
+
+    @Override
+    public void deletePilot(PilotModel pilot) {
+        pilotDb.delete(pilot);
+    }
 }
 

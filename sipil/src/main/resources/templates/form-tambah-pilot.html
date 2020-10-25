@@ -1,40 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Form Tambah Pilot</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<h3>Tambah Pilot</h3>
-<form th:action="@{/pilot/tambah}" th:objects="${pilot}" method="POST">
-    Nama : <br>
-    <input type="text" th:field="${pilot.nama}"/>
-    <br><br>
-    Nik: <br>
-    <input type="text" th:field="${pilot.nik}"/>
-    <br><br>
-    Tempat Lahir: <br>
-    <input type="text" th:field="${pilot.tempatLahir}"/>
-    <br><br>
-    Tanggal Lahir: <br>
-    <input type="date" th:field="${pilot.tanggalLahir}"/>
-    <br><br>
-    Jenis Kelamin: <br>
-    <select th:field="${pilot.jenisKelamin}">
-        <option value="1">Laki-laki</option>
-        <option value="2">Perempuan</option>
-    </select>
-    <br><br>
-    Sekolah: <br>
-    <select th:field="${pilot.akademi}">
-        <option th:each="sekolah : *{akademiList}" th:text="${sekolah.nama}" th:value="${sekolah.id}"></option>
-    </select>
-    <br><br>
-    Maskapai: <br>
-    <select th:field="${pilot.maskapai}">
-        <option th:each="maskapai : *{maskapaiList}" th:text="${maskapai.nama}" th:value="${maskapai.id}"></option>
-    </select>
-    <br><br>
-    <button type="submit">Submit</button>
-</form>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br>
+<div>
+        <div class="card mx-auto col-lg-5">
+            <div class="card-header col-lg-auto text-white font-weight-bold text-center" style="background-color: #001B36">
+                Tambah Pilot
+            </div>
+            <br>
+            <div class="col-lg-auto">
+                <form th:action="@{/pilot/tambah}" th:objects="${pilot}" method="POST">
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <input type="text" class="form-control" placeholder="Masukkan nama Anda" th:field="${pilot.nama}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Nik</label>
+                        <input type="text" class="form-control" placeholder="Masukkan Nik Anda" th:field="${pilot.nik}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Tempat Lahir</label>
+                        <input type="text" class="form-control" placeholder="E.g. Jakarta" th:field="${pilot.tempatLahir}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Lahir</label>
+                        <input type="date" class="form-control" th:field="${pilot.tanggalLahir}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Jenis Kelamin</label>
+                        <select class="form-control" th:field="${pilot.jenisKelamin}">
+                            <option value="1">Laki-laki</option>
+                            <option value="2">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sekolah</label>
+                        <select class="form-control" th:field="${pilot.akademi}">
+                            <option th:each="sekolah : *{akademiList}" th:text="${sekolah.nama}" th:value="${sekolah.id}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Maskapai</label>
+                        <select class="form-control" th:field="${pilot.maskapai}">
+                            <option th:each="maskapai : *{maskapaiList}" th:text="${maskapai.nama}" th:value="${maskapai.id}"></option>
+                        </select>
+                    </div>
+                    <div align="right">
+                        <a class="btn btn-dark font-weight-bold" style="background-color: #ffffff; color: #001B36;" th:href="@{/pilot}" role="button">Batal</a>
+                        <button type="submit" class="btn btn-dark font-weight-bold" style="background-color: #001B36;">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
 </body>
 </html>

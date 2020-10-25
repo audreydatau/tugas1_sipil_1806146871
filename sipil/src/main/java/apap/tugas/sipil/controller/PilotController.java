@@ -28,6 +28,10 @@ public class PilotController{
     @Autowired
     private MaskapaiService maskapaiService;
 
+    @GetMapping("/")
+    private String home(){
+        return "home";
+    }
 
     @GetMapping("/pilot/tambah")
     public String tambahPilotFormPage(Model model){
@@ -92,6 +96,18 @@ public class PilotController{
         model.addAttribute("listPilot", pilotList);
 
         return "view-all-pilot";
+    }
+
+    @RequestMapping("/pilot/hapus/{nipPilot}")
+    public String deleteKamar(
+            @PathVariable String nipPilot,
+            Model model
+    ){
+        PilotModel deletedPilot = pilotService.getPilotByNip(nipPilot);
+        pilotService.deletePilot(deletedPilot);
+
+        model.addAttribute("nip",nipPilot);
+        return "delete-pilot";
     }
 
 }

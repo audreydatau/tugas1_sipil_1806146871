@@ -18,5 +18,6 @@ public interface PilotService {
 
     PilotModel getPilotByNik(String nik);
 
+    void deletePilot(PilotModel pilot);
 
 }
