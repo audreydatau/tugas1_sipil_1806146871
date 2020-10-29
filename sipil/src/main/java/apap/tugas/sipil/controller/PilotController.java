@@ -67,11 +67,14 @@ public class PilotController{
             Model model
     ){
         PilotModel pilot=pilotService.getPilotByNip(nipPilot);
-        List<PilotPenerbanganModel> pilotPenerbanganList = pilot.getListPilotPenerbangan();
 
-        model.addAttribute("pilotPenerbanganList",pilotPenerbanganList);
-        model.addAttribute("pilot", pilot);
+        if (pilot!=null){
+            List<PilotPenerbanganModel> pilotPenerbanganList = pilot.getListPilotPenerbangan();
 
+            model.addAttribute("pilotPenerbanganList",pilotPenerbanganList);
+            model.addAttribute("pilot", pilot);
+        }
+        model.addAttribute("nip",nipPilot);
         return "view-pilot";
     }
 
@@ -81,12 +84,15 @@ public class PilotController{
             Model model
     ){
         PilotModel pilot=pilotService.getPilotByNip(nipPilot);
-        List<AkademiModel> akademiList = akademiService.getAkademiList();
-        List<MaskapaiModel> maskapaiList = maskapaiService.getMaskapaiList();
+        if (pilot!=null){
+            List<AkademiModel> akademiList = akademiService.getAkademiList();
+            List<MaskapaiModel> maskapaiList = maskapaiService.getMaskapaiList();
 
-        model.addAttribute("maskapaiList", maskapaiList);
-        model.addAttribute("akademiList", akademiList);
-        model.addAttribute("pilot",pilot);
+            model.addAttribute("maskapaiList", maskapaiList);
+            model.addAttribute("akademiList", akademiList);
+            model.addAttribute("pilot",pilot);
+        }
+        model.addAttribute("nip",nipPilot);
         return "form-update-pilot";
     }
 

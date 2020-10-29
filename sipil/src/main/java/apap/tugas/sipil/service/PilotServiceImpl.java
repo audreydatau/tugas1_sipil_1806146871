@@ -78,7 +78,10 @@ public class PilotServiceImpl implements PilotService{
 
     @Override
     public PilotModel getPilotByNip(String nip) {
-        return pilotDb.findAllByNip(nip).get();
+        if (pilotDb.existsByNip(nip)){
+            return pilotDb.findAllByNip(nip).get();
+        }
+        return null;
     }
 
     @Override

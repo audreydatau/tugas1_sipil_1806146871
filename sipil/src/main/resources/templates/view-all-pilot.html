@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Daftar Semua Pilot</title>
 
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
@@ -46,7 +46,7 @@
                 <td th:if="${pilot.jenisKelamin == 2}" th:text="Perempuan"></td>
 
                 <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #1A4A8A;" th:href="@{/pilot/}+${pilot.nip}" role="button">Lihat</a></td>
-                <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #577782;" th:href="@{/pilot/ubah/}+${pilot.nip}" role="button">Ubah</a></td>
+                <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #001B36;" th:href="@{/pilot/ubah/}+${pilot.nip}" role="button">Ubah</a></td>
                 <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #2E0700;" th:href="@{/pilot/hapus/}+${pilot.nip}" role="button">Hapus</a></td>
             </tr>
             </tbody>

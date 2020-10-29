@@ -14,4 +14,6 @@ public interface PilotDb extends JpaRepository<PilotModel, Long> {
     Optional<PilotModel> findAllByNip(String nip);
 
     Optional<PilotModel> findAllByNik(String nik);
+
+    boolean existsByNip(String nip);
 }
