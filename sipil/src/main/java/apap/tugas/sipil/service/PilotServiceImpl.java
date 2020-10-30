@@ -71,7 +71,12 @@ public class PilotServiceImpl implements PilotService{
         targetPilot.setAkademi(pilot.getAkademi());
         targetPilot.setMaskapai(pilot.getMaskapai());
         String NIP = createNIP(pilot);
-        targetPilot.setNip(NIP);
+        String NIPLama = targetPilot.getNip();
+        if (NIPLama.substring(0,11).equals(NIP.substring(0,11))){
+            targetPilot.setNip(NIPLama);
+        }else{
+            targetPilot.setNip(NIP);
+        }
         pilotDb.save(targetPilot);
         return targetPilot;
     }
@@ -101,30 +106,27 @@ public class PilotServiceImpl implements PilotService{
 
     @Override
     public List<PilotModel> getPilotTerbaik(List<PilotModel> pilotList) {
-        HashMap<Integer,PilotModel> terbanyakMap = new HashMap<>();
-        ArrayList<Integer> terbanyakList = new ArrayList<>();
-
-        for (PilotModel pilot:pilotList){
-            int jumlahPenerbangan = pilot.getListPilotPenerbangan().size();
-            terbanyakList.add(jumlahPenerbangan);
-            terbanyakMap.put(jumlahPenerbangan,pilot);
+        int n = pilotList.size();
+        PilotModel temp = null;
+        for(int i=0; i < n; i++){
+            for(int j=1; j < (n-i); j++){
+                if(pilotList.get(j-1).getListPilotPenerbangan().size() < pilotList.get(j).getListPilotPenerbangan().size()){
+                    temp = pilotList.get(j-1);
+                    pilotList.set(j-1,pilotList.get(j));
+                    pilotList.set(j,temp);
+                }
+            }
         }
-        Collections.sort(terbanyakList,Collections.reverseOrder());
 
         List<PilotModel> result = new ArrayList<>();
 
-        if (terbanyakList.size()==1){
-            PilotModel pilot = terbanyakMap.get(terbanyakList.get(0));
-            result.add(pilot);
-        }else if (terbanyakList.size()==2){
-            for (int jumlah:terbanyakList){
-                PilotModel pilot = terbanyakMap.get(jumlah);
-                result.add(pilot);
-            }
-        }else if (terbanyakList.size()>=3){
+        if (pilotList.size()==1){
+            result = pilotList;
+        }else if (pilotList.size()==2){
+            result = pilotList;
+        }else if (pilotList.size()>=3){
             for (int i=0;i<3;i++){
-                PilotModel pilot = terbanyakMap.get(terbanyakList.get(i));
-                result.add(pilot);
+                result.add(pilotList.get(i));
             }
         }
 

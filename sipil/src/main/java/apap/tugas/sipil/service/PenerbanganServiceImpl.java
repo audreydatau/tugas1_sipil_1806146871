@@ -30,7 +30,15 @@ public class PenerbanganServiceImpl implements PenerbanganService{
 
     @Override
     public PenerbanganModel getPenerbanganById(Long id) {
-        return penerbanganDb.findById(id).get();
+        if (penerbanganDb.existsById(id)){
+            return penerbanganDb.findById(id).get();
+        }
+        return null;
+    }
+
+    @Override
+    public List<PenerbanganModel> getPenerbanganList() {
+        return penerbanganDb.findAll();
     }
 
     @Override

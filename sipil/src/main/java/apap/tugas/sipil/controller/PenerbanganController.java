@@ -43,8 +43,16 @@ public class PenerbanganController {
             @ModelAttribute PenerbanganModel penerbangan,
             Model model){
         penerbanganService.addPenerbangan(penerbangan);
-        model.addAttribute("id",penerbangan.getId());
+        model.addAttribute("kode",penerbangan.getKode());
         return "tambah-penerbangan";
+    }
+
+    @RequestMapping("/penerbangan")
+    public String viewAllPenerbangan(Model model){
+        List<PenerbanganModel> penerbanganList = penerbanganService.getPenerbanganList();
+
+        model.addAttribute("penerbanganList",penerbanganList);
+        return "view-all-penerbangan";
     }
 
     @GetMapping("/penerbangan/detail/{idPenerbangan}")
@@ -55,28 +63,20 @@ public class PenerbanganController {
         PenerbanganModel penerbangan = penerbanganService.getPenerbanganById(idPenerbangan);
         List<PilotModel> pilotList = pilotService.getPilotList();
 
-        List<PilotPenerbanganModel> pilotPenerbanganList = penerbangan.getListPilotPenerbangan();
-        model.addAttribute("pilotPenerbanganList",pilotPenerbanganList);
+        if (penerbangan!=null){
+            List<PilotPenerbanganModel> pilotPenerbanganList = penerbangan.getListPilotPenerbangan();
+            model.addAttribute("pilotPenerbanganList",pilotPenerbanganList);
 
-        List<PilotModel> tempPilotList = new ArrayList<>();
-        if (pilotPenerbanganList!=null){
-            for (PilotPenerbanganModel pp:pilotPenerbanganList){
-                PilotModel plt = pp.getPilot();
-                tempPilotList.add(plt);
+            List<PilotModel> tempPilotList = new ArrayList<>();
+            if (pilotPenerbanganList!=null){
+                for (PilotPenerbanganModel pp:pilotPenerbanganList){
+                    PilotModel plt = pp.getPilot();
+                    tempPilotList.add(plt);
+                }
+                pilotList.removeAll(tempPilotList);
             }
-            pilotList.removeAll(tempPilotList);
-
-            if (pilotPenerbanganList.size()!=0){
-                Date tanggalPenugasan = pilotPenerbanganList.get(0).getTanggalPenugasan();
-                model.addAttribute("tanggalPenugasan", tanggalPenugasan);
-            }else{
-                model.addAttribute("tanggalPenugasan", new Date());
-            }
-        }else{
-            model.addAttribute("tanggalPenugasan", new Date());
         }
-
-
+        model.addAttribute("id",idPenerbangan);
         model.addAttribute("penerbangan", penerbangan);
         model.addAttribute("pilotList", pilotList);
         return "view-penerbangan";
@@ -88,8 +88,11 @@ public class PenerbanganController {
             Model model
     ){
         PenerbanganModel penerbangan = penerbanganService.getPenerbanganById(idPenerbangan);
+        if (penerbangan!=null){
+            model.addAttribute("penerbangan", penerbangan);
+        }
 
-        model.addAttribute("penerbangan", penerbangan);
+        model.addAttribute("id", idPenerbangan);
         return "form-update-penerbangan";
     }
 
@@ -111,9 +114,19 @@ public class PenerbanganController {
             Model model
     ){
         PenerbanganModel deletedPenerbangan = penerbanganService.getPenerbanganById(idPenerbangan);
-        String kodePenerbangan = deletedPenerbangan.getKode();
-        penerbanganService.deletePenerbangan(deletedPenerbangan);
-        model.addAttribute("kode",kodePenerbangan);
+        if (deletedPenerbangan!=null){
+            String kodePenerbangan = deletedPenerbangan.getKode();
+
+            List<PilotPenerbanganModel> pilotPenerbanganList = deletedPenerbangan.getListPilotPenerbangan();
+            if (pilotPenerbanganList.size()==0){
+                penerbanganService.deletePenerbangan(deletedPenerbangan);
+                model.addAttribute("msg","Penerbangan "+kodePenerbangan+" berhasil dihapus");
+            }else{
+                model.addAttribute("msg","Penerbangan "+kodePenerbangan+" gagal dihapus karena terdapat pilot yang bertugas");
+            }
+        }
+
+        model.addAttribute("id",idPenerbangan);
         return "delete-penerbangan";
     }
 
@@ -125,36 +138,13 @@ public class PenerbanganController {
             Model model
     ){
         PilotModel pilot = pilotService.getPilotById(Long.valueOf(request.getParameter("pilot")));
+        PenerbanganModel penerbanganModel = penerbanganService.getPenerbanganById(idPenerbangan);
+        PilotPenerbanganModel pilotPenerbangan = pilotPenerbanganService.createPilotPenerbanganModel(pilot,penerbangan);
+        pilotPenerbanganService.addPilotPenerbangan(pilotPenerbangan);
 
-        List<PilotModel> pilotList = pilotService.getPilotList();
-        List<PilotPenerbanganModel> pilotPenerbanganList = penerbangan.getListPilotPenerbangan();
-
-        List<PilotModel> tempPilotList = new ArrayList<>();
-
-        if (pilotPenerbanganList!=null){
-            for (PilotPenerbanganModel pp:pilotPenerbanganList){
-                PilotModel plt = pp.getPilot();
-                tempPilotList.add(plt);
-            }
-        }
-
-        pilotList.removeAll(tempPilotList);
-        model.addAttribute("pilotList",pilotList);
-
-        if (tempPilotList.contains(pilot)){
-            model.addAttribute("penerbangan",penerbangan);
-            model.addAttribute("pilotPenerbanganList",pilotPenerbanganList);
-            return "view-penerbangan";
-        }else{
-            PilotPenerbanganModel pilotPenerbangan = new PilotPenerbanganModel();
-            pilotPenerbangan.setPilot(pilot);
-            pilotPenerbangan.setPenerbangan(penerbangan);
-
-            pilotPenerbangan.setTanggalPenugasan(new Date());
-            pilotPenerbanganService.addPilotPenerbangan(pilotPenerbangan);
-            model.addAttribute("penerbanganList",pilotPenerbanganList);
-            return "redirect:/penerbangan/detail/" + idPenerbangan;
-        }
+        model.addAttribute("pilot",pilot);
+        model.addAttribute("penerbangan", penerbanganModel);
+        return "penerbangan-tambah-pilot";
     }
 
 }

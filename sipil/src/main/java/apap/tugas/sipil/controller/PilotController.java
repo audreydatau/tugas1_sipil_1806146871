@@ -84,6 +84,7 @@ public class PilotController{
             Model model
     ){
         PilotModel pilot=pilotService.getPilotByNip(nipPilot);
+
         if (pilot!=null){
             List<AkademiModel> akademiList = akademiService.getAkademiList();
             List<MaskapaiModel> maskapaiList = maskapaiService.getMaskapaiList();
@@ -92,6 +93,7 @@ public class PilotController{
             model.addAttribute("akademiList", akademiList);
             model.addAttribute("pilot",pilot);
         }
+
         model.addAttribute("nip",nipPilot);
         return "form-update-pilot";
     }
@@ -103,6 +105,8 @@ public class PilotController{
             Model model
     ){
         PilotModel pilotUpdated= pilotService.updatePilot(pilot);
+
+        model.addAttribute("nipPilot",nipPilot);
         model.addAttribute("pilot", pilotUpdated);
         return "update-pilot";
     }
@@ -116,14 +120,18 @@ public class PilotController{
     }
 
     @RequestMapping("/pilot/hapus/{nipPilot}")
-    public String deleteKamar(
+    public String deletePilot(
             @PathVariable String nipPilot,
             Model model
     ){
         PilotModel deletedPilot = pilotService.getPilotByNip(nipPilot);
-        pilotService.deletePilot(deletedPilot);
+        if (deletedPilot!=null){
+            pilotService.deletePilot(deletedPilot);
+            model.addAttribute("nip",nipPilot);
+        }else {
+            model.addAttribute("msg","Pilot dengan NIP "+nipPilot+" tidak ditemukan");
+        }
 
-        model.addAttribute("nip",nipPilot);
         return "delete-pilot";
     }
 
@@ -187,6 +195,7 @@ public class PilotController{
                     pilotList.add(pilotModel);
                 }
             }
+
             terbanyakList = pilotService.getPilotTerbaik(pilotList);
 
             for (PilotModel pilotModel:terbanyakList){

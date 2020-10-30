@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Semua Penerbangan</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br><br><br><br>
+<div class="container">
+    <table>
+    <div class="row mx-lg-5">
+        <tr>
+            <a class="btn btn-primary text-white font-weight-bold" style="background-color: #577782;" th:href="@{/penerbangan/tambah}" role="button">+ Tambah Penerbangan</a>
+        </tr>
+        <br>
+        <tr>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center text-white" colspan="8" style="background-color: #001B36;">Daftar Penerbangan</th>
+                        </tr>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Kode Penerbangan</th>
+                            <th scope="col">Waktu</th>
+                            <th scope="col">Kota Asal</th>
+                            <th scope="col">Kota Tujuan</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="penerbangan, iterationStatus: ${penerbanganList}">
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td th:text="${penerbangan.kode}"></td>
+                            <td th:text="${#dates.format(penerbangan.waktu, 'HH:mm, dd/MM/yyyy')}"></td>
+                            <td th:text="${penerbangan.kotaAsal}"></td>
+                            <td th:text="${penerbangan.kotaTujuan}"></td>
+
+
+                            <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #1A4A8A;" th:href="@{/penerbangan/detail/}+${penerbangan.id}" role="button">Lihat</a></td>
+                            <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #001B36;" th:href="@{/penerbangan/ubah/}+${penerbangan.id}" role="button">Ubah</a></td>
+                            <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #2E0700;" th:href="@{/penerbangan/hapus/}+${penerbangan.id}" role="button">Hapus</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tr>
+    </div>
+    </table>
+</div>
+</body>
+</html>

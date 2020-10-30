@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Ubah pilot</title>
+    <title>Tambah Pilot di Penerbangan</title>
 
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
@@ -10,8 +10,8 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="jumbotron w-75 mx-auto text-center" style="background-color: #ffffff;">
-    <h1 class="text-center font-weight-bold" th:text="'Pilot dengan NIP '+ ${nipPilot}+' berhasil diubah dan NIP menjadi '+${pilot.nip}"></h1>
-    <a class="text-center" th:href="@{/pilot}">Kembali ke Daftar Pilot</a>
+    <h1 class="text-center font-weight-bold" th:text="'Pilot bernama '+${pilot.nama} +' berhasil ditambahkan pada Penerbangan '+ ${penerbangan.kode}"></h1>
+    <a class="text-center" th:href="@{/penerbangan}">Kembali ke Daftar Penerbangan</a>
 </div>
 </body>
 </html>

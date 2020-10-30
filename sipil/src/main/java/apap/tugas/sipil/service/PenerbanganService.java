@@ -11,6 +11,7 @@ public interface PenerbanganService {
 
     PenerbanganModel getPenerbanganById(Long id);
 
+    List<PenerbanganModel> getPenerbanganList();
 
     PenerbanganModel updatePenerbangan(PenerbanganModel penerbangan);
 

@@ -11,7 +11,7 @@
 <div th:if="${pilot != null}">
     <br>
     <div>
-        <div class="card mx-auto col-lg-5">
+        <div class="mx-auto col-lg-5">
             <div class="card-header col-lg-auto text-white font-weight-bold text-center" style="background-color: #001B36">
                 Ubah Pilot
             </div>
@@ -21,36 +21,36 @@
                     <input type="hidden" th:field="*{pilot.id}">
                     <div class="form-group">
                         <label>Nama</label>
-                        <input type="text" class="form-control" th:value="*{pilot.nama}" th:field="${pilot.nama}"/>
+                        <input type="text" class="form-control" th:value="*{pilot.nama}" th:field="${pilot.nama}" required/>
                     </div>
                     <div class="form-group">
                         <label>Nik</label>
-                        <input type="text" class="form-control" th:value="*{pilot.nik}" th:field="${pilot.nik}"/>
+                        <input type="text" class="form-control" th:value="*{pilot.nik}" th:field="${pilot.nik}" required/>
                     </div>
                     <div class="form-group">
                         <label>Tempat Lahir</label>
-                        <input type="text" class="form-control" th:value="*{pilot.tempatLahir}" th:field="${pilot.tempatLahir}"/>
+                        <input type="text" class="form-control" th:value="*{pilot.tempatLahir}" th:field="${pilot.tempatLahir}" required/>
                     </div>
                     <div class="form-group">
                         <label>Tanggal Lahir</label>
-                        <input type="date" class="form-control" th:value="*{pilot.tanggalLahir}" th:field="${pilot.tanggalLahir}"/>
+                        <input type="date" class="form-control" th:value="*{pilot.tanggalLahir}" th:field="${pilot.tanggalLahir}" required/>
                     </div>
                     <div class="form-group">
                         <label>Jenis Kelamin</label>
-                        <select class="form-control" th:field="${pilot.jenisKelamin}" th:value="*{pilot.jenisKelamin}">
+                        <select class="form-control" th:field="${pilot.jenisKelamin}" th:value="*{pilot.jenisKelamin}" required>
                             <option value="1">Laki-laki</option>
                             <option value="2">Perempuan</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Sekolah</label>
-                        <select class="form-control" th:field="${pilot.akademi}" th:value="*{pilot.akademi.nama}">
+                        <select class="form-control" th:field="${pilot.akademi}" th:value="*{pilot.akademi.nama}" required>
                             <option th:each="sekolah : *{akademiList}" th:text="${sekolah.nama}" th:value="${sekolah.id}"></option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Maskapai</label>
-                        <select class="form-control" th:field="${pilot.maskapai}" th:value="*{pilot.maskapai.nama}">
+                        <select class="form-control" th:field="${pilot.maskapai}" th:value="*{pilot.maskapai.nama}"required>
                             <option th:each="maskapai : *{maskapaiList}" th:text="${maskapai.nama}" th:value="${maskapai.id}"></option>
                         </select>
                     </div>

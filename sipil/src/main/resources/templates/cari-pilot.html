@@ -3,45 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Cari Pilot</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<form th:action = "@{/cari/pilot}" method="GET">
-
-    <label>Pilih Kode Maskapai</label>
-
-    <select name="kodeMaskapai">
-        <option value="">Kode Maskapai</option>
-        <option th:each="maskapai : ${maskapaiList}" th:value="${maskapai.kode}" th:text="${maskapai.kode}"></option>
-    </select>
-
-    <label>Pilih Nama Sekolah</label>
-
-    <select name="idSekolah">
-        <option value="">Nama Sekolah</option>
-        <option th:each="akademi : ${akademiList}" th:value="${akademi.id}" th:text="${akademi.nama}"></option>
-    </select>
-
-    <button>Cari</button>
-</form>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>NIP</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="pilot, iterationStatus :   ${pilotList}">
-            <td><a th:text="${iterationStatus.count}"></a></td>
-            <td><a th:text="${pilot.nama}"></a></td>
-            <td><a th:text="${pilot.nip}"></a></td>
-        </tr>
-        </tbody>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br><br>
+    <table align="center">
+    <form th:action = "@{/cari/pilot}" method="GET">
+        <div class="container">
+            <tr>
+            <div class="row ">
+                <td><div class="col font-weight-bold">Pilih Kode Maskapai</div></td>
+                <td><div class="col font-weight-bold" >Pilih Nama Sekolah</div></td>
+            </div>
+            </tr>
+            <tr>
+            <div class="row ">
+                <td>
+                <div class="col font-weight-bold">
+                    <select class="form-control" name="kodeMaskapai">
+                        <option value="">Kode Maskapai</option>
+                        <option th:each="maskapai : ${maskapaiList}" th:value="${maskapai.kode}" th:text="${maskapai.kode}"></option>
+                    </select>
+                </div>
+                </td>
+                <td>
+                <div class="col">
+                    <select class="form-control" name="idSekolah">
+                        <option value="">Nama Sekolah</option>
+                        <option th:each="akademi : ${akademiList}" th:value="${akademi.id}" th:text="${akademi.nama}"></option>
+                    </select>
+                </div>
+                </td>
+                <td>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </div>
+                </td>
+            </div>
+            </tr>
+        </div>
+    </form>
     </table>
+    <br><br>
+        <table class="table table-hover" align="center">
+            <thead>
+            <tr>
+                <th class="text-center text-white" colspan="3"  style="background-color: #001B36;">Daftar Pilot Berdasarkan Maskapai atau Sekolah</th>
+            </tr>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama</th>
+                <th scope="col">NIP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "pilot, iterationStatus :   ${pilotList}">
+                <th scope="row" th:text="${iterationStatus.count}"></th>
+                <td th:text ="${pilot.nama}"></td>
+                <td th:text ="${pilot.nip}"> </td>
+            </tr>
+            </tbody>
+        </table>
+
 <script>$(document).ready( function () {
     $('.table').DataTable();
-} );</script>
+} );
+</script>
 </body>
 </html>
