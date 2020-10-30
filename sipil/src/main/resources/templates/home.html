@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br><br><br><br>
+<div class="jumbotron w-75 mx-auto" style="background-color: #001B36;">
+    <h1 class="display-4 text-center font-weight-bold text-white">Selamat Datang di SIPILOT!</h1>
+</div>
+<div class="jumbotron w-75 mx-auto" style="background-color: #ffffff;">
+    <h1 class="display-8 text-center">Daftar fitur:</h1>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-2 text-center">
+                <a class="btn btn-block btn-default text-white" style="background-color: #001B36;" th:href="@{/pilot}">Pilot</a>
+            </div>
+            <div class="col-sm-2  text-center">
+                <a class="btn btn-block btn-block btn-default text-white" style="background-color: #001B36;" th:href="@{/penerbangan}">Penerbangan</a>
+            </div>
+            <div class="col-sm-2  text-center">
+                <a class="btn btn-block btn-default text-white" style="background-color: #001B36;" th:href="@{/cari/pilot}">Cari</a>
+            </div>
+            <div class="col-sm-2  text-center">
+                <a class="btn btn-block btn-block btn-default text-white" style="background-color: #001B36;" th:href="@{/cari/pilot/bulan-ini}">Bonus</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

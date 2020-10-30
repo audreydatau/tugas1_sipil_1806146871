@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Semua Pilot</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br><br><br><br>
+<div class="container">
+    <table>
+        <div class="row mx-4">
+            <tr>
+                <a class="btn btn-primary text-white font-weight-bold" style="background-color: #577782;" th:href="@{/pilot/tambah}" role="button">+ Tambah Pilot</a>
+            </tr>
+            <br> <br>
+            <tr>
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <table class="table table-hover ">
+                            <thead>
+                            <tr>
+                                <th class="text-center text-white" colspan="9" style="background-color: #001B36;">Daftar Pilot</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">NIP</th>
+                                <th scope="col">NIK</th>
+                                <th scope="col">Tanggal Lahir</th>
+                                <th scope="col">Jenis Kelamin</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="pilot, iterationStatus: ${listPilot}">
+                                <td th:text="${iterationStatus.count}"></td>
+                                <td th:text="${pilot.nama}"></td>
+                                <td th:text="${pilot.nip}"></td>
+                                <td th:text="${pilot.nik}"></td>
+                                <td th:text="${#dates.format(pilot.tanggalLahir, 'dd/MM/yyyy')}"></td>
+                                <td th:if="${pilot.jenisKelamin == 1}" th:text="Laki-laki"></td>
+                                <td th:if="${pilot.jenisKelamin == 2}" th:text="Perempuan"></td>
+
+                                <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #1A4A8A;" th:href="@{/pilot/}+${pilot.nip}" role="button">Lihat</a></td>
+                                <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #001B36;" th:href="@{/pilot/ubah/}+${pilot.nip}" role="button">Ubah</a></td>
+                                <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #2E0700;" th:href="@{/pilot/hapus/}+${pilot.nip}" role="button">Hapus</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tr>
+        </div>
+    </table>
+</div>
+</body>
+</html>

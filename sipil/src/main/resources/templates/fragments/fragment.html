@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <head th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/DataTables/datatables.min.css}"/>
+    </head>
+
+    <head th:fragment="js">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/esm/popper.min.js"></script>
+        <script th:src="@{/js/bootstrap.min.js}"></script>
+
+        <script type="text/javascript" th:src="@{/DataTables/datatables.min.js}"></script>
+    </head>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar sticky-top navbar-expand-lg navbar-dark"  style="background-color: #001B36;">
+    <a th:text="SIPILOT" class="navbar-brand font-weight-bold text-white" th:href="@{/}"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/pilot}">Pilot</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/penerbangan}">Penerbangan</a>
+            </li>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cari
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" th:href="@{/cari/pilot}">Cari Pilot berdasarkan Maskapai/Akademi</a>
+                    <a class="dropdown-item" th:href="@{/cari/pilot/penerbangan-terbanyak}">Cari Pilot dengan Penerbangan Terbanyak</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/cari/pilot/bulan-ini}">Bonus</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>

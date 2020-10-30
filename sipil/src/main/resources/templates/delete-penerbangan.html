@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hapus penerbangan</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div th:if="${msg != null}">
+    <div class="jumbotron w-75 mx-auto text-center" style="background-color: #ffffff;">
+        <h1 class="text-center font-weight-bold" th:text="${msg}"></h1>
+        <a class="text-center" th:href="@{/penerbangan}">Kembali ke Daftar Penerbangan</a>
+    </div>
+</div>
+<div th:unless="${msg != null}">
+    <div class="jumbotron w-75 mx-auto text-center" style="background-color: #ffffff;">
+        <h1 class="text-center font-weight-bold" th:text="'Penerbangan dengan id ' +${id}+ ' tidak ditemukan'"></h1>
+        <a class="text-center" th:href="@{/penerbangan}">Kembali ke Daftar Penerbangan</a>
+    </div>
+</div>
+</body>
+</html>

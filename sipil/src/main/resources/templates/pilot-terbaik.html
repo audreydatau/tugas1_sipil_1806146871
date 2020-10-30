@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pilot Terbaik</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br><br>
+<table align="center">
+    <form th:action = "@{/cari/pilot/penerbangan-terbanyak}" method="GET">
+        <div class="container">
+            <tr>
+                <div class="row ">
+                    <td><div class="col font-weight-bold">Pilih Kode Maskapai</div></td>
+                </div>
+            </tr>
+            <tr>
+                <div class="row ">
+                    <td>
+                        <div class="col font-weight-bold">
+                            <select class="form-control" name="kodeMaskapai">
+                                <option value="">Kode Maskapai</option>
+                                <option th:each="maskapai : ${maskapaiList}" th:value="${maskapai.kode}" th:text="${maskapai.kode}"></option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                        </div>
+                    </td>
+                </div>
+            </tr>
+        </div>
+    </form>
+</table>
+<br><br>
+
+<table class="table table-hover col-lg-7 text-center" align="center">
+    <thead>
+    <tr>
+        <th class="text-center text-white" colspan="4"  style="background-color: #001B36;">Daftar 3 Pilot Terbaik Berdasarkan Penerbangan Terbanyak</th>
+    </tr>
+    <tr>
+        <th scope="col">No</th>
+        <th scope="col">Nama</th>
+        <th scope="col">NIP</th>
+        <th scope="col">Jumlah Penerbangan</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="terbanyak, iterationStatus :   ${terbanyakMap}">
+        <td><a th:text="${iterationStatus.count}"></a></td>
+        <td><a th:text="${terbanyak.key.nama}"></a></td>
+        <td><a th:text="${terbanyak.key.nip}"></a></td>
+        <td><a th:text="${terbanyak.value}"></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

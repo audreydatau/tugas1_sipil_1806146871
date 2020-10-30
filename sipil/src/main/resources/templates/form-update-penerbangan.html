@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Form Ubah Penerbangan</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div th:if="${penerbangan != null}">
+    <br>
+    <div>
+        <div class="mx-auto col-lg-5">
+            <div class="card-header col-lg-auto text-white font-weight-bold text-center" style="background-color: #001B36">
+                Ubah Penerbangan
+            </div>
+            <br>
+            <div class="col-lg-auto">
+                <form th:action="@{/penerbangan/ubah/}+ ${penerbangan.id}" th:objects="${penerbangan}" method="POST">
+                    <input type="hidden" th:field="*{penerbangan.id}">
+                    <div class="form-group">
+                        <label>Kode</label>
+                        <input type="text" class="form-control" th:value="*{penerbangan.kode}" th:field="${penerbangan.kode}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Waktu</label>
+                        <input type="datetime-local" class="form-control" th:value="*{penerbangan.waktu}" th:field="${penerbangan.waktu}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Kota Asal</label>
+                        <input type="text" class="form-control" th:value="*{penerbangan.kotaAsal}" th:field="${penerbangan.kotaAsal}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Kota Tujuan</label>
+                        <input type="text" class="form-control" th:value="*{penerbangan.kotaTujuan}" th:field="${penerbangan.kotaTujuan}" required/>
+                    </div>
+
+                    <div align="right">
+                        <a class="btn btn-dark font-weight-bold" style="background-color: #ffffff; color: #001B36;" th:href="@{/penerbangan/detail/}+${penerbangan.id}" role="button">Batal</a>
+                        <button type="submit" class="btn btn-dark font-weight-bold" style="background-color: #001B36;">Simpan</button>
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<div th:unless="${penerbangan != null}">
+    <div class="jumbotron w-75 mx-auto text-center" style="background-color: #ffffff;">
+        <h1 class="text-center font-weight-bold" th:text="'Penerbangan dengan id '+ ${id}+' tidak ditemukan'"></h1>
+        <a class="text-center" th:href="@{/penerbangan}">Kembali ke Daftar Penerbangan</a>
+    </div>
+</div>
+</body>
+</html>

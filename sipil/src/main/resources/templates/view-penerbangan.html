@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Detail Penerbangan</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div th:if="${penerbangan != null}">
+    <br>
+    <div class="mx-auto col-lg-5">
+        <div class="card-header col-lg-auto text-white font-weight-bold text-center" style="background-color: #001B36">
+            Detail Penerbangan
+        </div>
+        <br>
+        <div class="container">
+            <div class="row ">
+                <div class="col col-lg-4">Id</div>
+                <div class="col-md-auto" th:text="': '+ ${penerbangan.id}"></div>
+            </div>
+            <div class="row">
+                <div class="col col-lg-4">Kode Penerbangan</div>
+                <div class="col-md-auto" th:text="': '+ ${penerbangan.kode}"></div>
+            </div>
+            <div class="row">
+                <div class="col col-lg-4">Waktu</div>
+                <div class="col-md-auto" th:text="': '+ ${#dates.format(penerbangan.waktu, 'HH:mm, dd/MM/yyyy')}"></div>
+            </div>
+            <div class="row">
+                <div class="col col-lg-4">Kota Asal</div>
+                <div class="col-md-auto" th:text="': '+ ${penerbangan.kotaAsal}"></div>
+            </div>
+            <div class="row">
+                <div class="col col-lg-4">Kota Tujuan</div>
+                <div class="col-md-auto" th:text="': '+ ${penerbangan.kotaTujuan}"></div>
+            </div>
+            <div align="right">
+                <a class="btn btn-primary text-white font-weight-bold" style="background-color: #001B36;" th:href="@{/penerbangan/ubah/}+${penerbangan.id}" role="button">Ubah</a>
+                <a class="btn btn-primary text-white font-weight-bold" style="background-color: #2E0700;" th:href="@{/penerbangan/hapus/}+${penerbangan.id}" role="button">Hapus</a>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col col-md-auto">
+        <div class="container">
+            <form th:object="${penerbangan}" th:action="@{/penerbangan/}+${penerbangan.id}+@{/pilot/tambah}" method="POST">
+                <input th:value="${penerbangan.id}" name="id" hidden>
+            <div class="row ">
+                <div class="col col-2 font-weight-bold">Pilih Pilot</div>
+            </div>
+            <div class="row">
+                <div class="col col-3">
+                    <div class="form-group">
+                        <select class="form-control" name="pilot">
+                            <option>--Pilih Nama Pilot--</option>
+                            <option th:each="pilot : ${pilotList}" th:text="${pilot.nama}" th:value="${pilot.id}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-primary">Tambah Pilot</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="col col-md-auto">
+        <table class="table table-hover" >
+            <thead>
+            <tr>
+                <th class="text-center text-white" colspan="6"  style="background-color: #001B36;">Jadwal Bertugas</th>
+            </tr>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama</th>
+                <th scope="col">NIP</th>
+                <th scope="col">Tanggal Lahir</th>
+                <th scope="col">Jenis Kelamin</th>
+                <th scope="col">Tanggal Penugasan</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "pilotPenerbangan, iterationStatus: ${pilotPenerbanganList}">
+                <th scope="row" th:text="${iterationStatus.count}"></th>
+                <td th:text ="${pilotPenerbangan.pilot.nama}"> </td>
+                <td th:text ="${pilotPenerbangan.pilot.nip}"> </td>
+                <td th:text ="${#dates.format(pilotPenerbangan.pilot.tanggalLahir, 'dd/MM/yyyy')}"> </td>
+                <td th:if="${pilotPenerbangan.pilot.jenisKelamin == 1}">Laki-laki</td>
+                <td th:if="${pilotPenerbangan.pilot.jenisKelamin == 2}">Perempuan</td>
+                <td th:text ="${#dates.format(pilotPenerbangan.tanggalPenugasan, 'dd/MM/yyyy')}"> </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:unless="${penerbangan != null}">
+    <div class="jumbotron w-75 mx-auto text-center" style="background-color: #ffffff;">
+        <h1 class="text-center font-weight-bold" th:text="'Penerbangan dengan id '+ ${id}+' tidak ditemukan'"></h1>
+        <a class="text-center" th:href="@{/penerbangan}">Kembali ke Daftar Penerbangan</a>
+    </div>
+</div>
+</body>
+</html>
