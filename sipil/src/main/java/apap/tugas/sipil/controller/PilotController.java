@@ -126,8 +126,12 @@ public class PilotController{
     ){
         PilotModel deletedPilot = pilotService.getPilotByNip(nipPilot);
         if (deletedPilot!=null){
-            pilotService.deletePilot(deletedPilot);
-            model.addAttribute("nip",nipPilot);
+            if(deletedPilot.getListPilotPenerbangan().size()==0){
+                pilotService.deletePilot(deletedPilot);
+                model.addAttribute("nip",nipPilot);
+            }else{
+                model.addAttribute("msg","Pilot dengan NIP "+nipPilot+" tidak dapat dihapus karena terdapat jadwal tugas.");
+            }
         }else {
             model.addAttribute("msg","Pilot dengan NIP "+nipPilot+" tidak ditemukan");
         }
