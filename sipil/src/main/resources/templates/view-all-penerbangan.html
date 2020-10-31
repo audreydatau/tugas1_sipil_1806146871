@@ -46,7 +46,9 @@
 
                             <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #1A4A8A;" th:href="@{/penerbangan/detail/}+${penerbangan.id}" role="button">Lihat</a></td>
                             <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #001B36;" th:href="@{/penerbangan/ubah/}+${penerbangan.id}" role="button">Ubah</a></td>
-                            <td><a class="btn btn-primary text-white font-weight-bold" style="background-color: #2E0700;" th:href="@{/penerbangan/hapus/}+${penerbangan.id}" role="button">Hapus</a></td>
+                            <form th:action="@{/penerbangan/hapus}" th:object="${penerbangan}" method="POST">
+                                <td><button class="btn btn-primary text-white font-weight-bold" style="background-color: #2E0700;" th:value="${penerbangan.id}" name="hapus" role="button">Hapus</button></td>
+                            </form>
                         </tr>
                         </tbody>
                     </table>

@@ -37,8 +37,10 @@
                 <div class="col-md-auto" th:text="': '+ ${penerbangan.kotaTujuan}"></div>
             </div>
             <div align="right">
-                <a class="btn btn-primary text-white font-weight-bold" style="background-color: #001B36;" th:href="@{/penerbangan/ubah/}+${penerbangan.id}" role="button">Ubah</a>
-                <a class="btn btn-primary text-white font-weight-bold" style="background-color: #2E0700;" th:href="@{/penerbangan/hapus/}+${penerbangan.id}" role="button">Hapus</a>
+                <form th:action="@{/penerbangan/hapus}" th:object="${penerbangan}" method="POST">
+                    <a class="btn btn-primary text-white font-weight-bold" style="background-color: #001B36;" th:href="@{/penerbangan/ubah/}+${penerbangan.id}" role="button">Ubah</a>
+                    <button class="btn btn-primary text-white font-weight-bold" style="background-color: #2E0700;" th:value="${penerbangan.id}" name="hapus" role="button">Hapus</button>
+                </form>
             </div>
         </div>
         <br>

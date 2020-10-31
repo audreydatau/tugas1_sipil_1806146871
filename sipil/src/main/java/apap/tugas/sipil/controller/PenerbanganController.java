@@ -108,25 +108,24 @@ public class PenerbanganController {
         return "update-penerbangan";
     }
 
-    @RequestMapping("penerbangan/hapus/{idPenerbangan}")
+    @PostMapping("penerbangan/hapus")
     public String deletePenerbangan(
-            @PathVariable Long idPenerbangan,
+            @ModelAttribute PenerbanganModel penerbangan,
+            HttpServletRequest request,
             Model model
     ){
-        PenerbanganModel deletedPenerbangan = penerbanganService.getPenerbanganById(idPenerbangan);
-        if (deletedPenerbangan!=null){
-            String kodePenerbangan = deletedPenerbangan.getKode();
+        PenerbanganModel deletedPenerbangan = penerbanganService.getPenerbanganById(Long.valueOf(request.getParameter("hapus")));
 
-            List<PilotPenerbanganModel> pilotPenerbanganList = deletedPenerbangan.getListPilotPenerbangan();
-            if (pilotPenerbanganList.size()==0){
-                penerbanganService.deletePenerbangan(deletedPenerbangan);
-                model.addAttribute("msg","Penerbangan "+kodePenerbangan+" berhasil dihapus");
-            }else{
-                model.addAttribute("msg","Penerbangan "+kodePenerbangan+" gagal dihapus karena terdapat pilot yang bertugas");
-            }
+        String kodePenerbangan = deletedPenerbangan.getKode();
+
+        List<PilotPenerbanganModel> pilotPenerbanganList = deletedPenerbangan.getListPilotPenerbangan();
+        if (pilotPenerbanganList.size()==0){
+            penerbanganService.deletePenerbangan(deletedPenerbangan);
+            model.addAttribute("msg","Penerbangan "+kodePenerbangan+" berhasil dihapus");
+        }else{
+            model.addAttribute("msg","Penerbangan "+kodePenerbangan+" gagal dihapus karena terdapat pilot yang bertugas");
         }
 
-        model.addAttribute("id",idPenerbangan);
         return "delete-penerbangan";
     }
 

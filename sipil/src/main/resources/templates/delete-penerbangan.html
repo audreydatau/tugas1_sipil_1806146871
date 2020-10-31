@@ -9,17 +9,9 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-<div th:if="${msg != null}">
-    <div class="jumbotron w-75 mx-auto text-center" style="background-color: #ffffff;">
-        <h1 class="text-center font-weight-bold" th:text="${msg}"></h1>
-        <a class="text-center" th:href="@{/penerbangan}">Kembali ke Daftar Penerbangan</a>
-    </div>
-</div>
-<div th:unless="${msg != null}">
-    <div class="jumbotron w-75 mx-auto text-center" style="background-color: #ffffff;">
-        <h1 class="text-center font-weight-bold" th:text="'Penerbangan dengan id ' +${id}+ ' tidak ditemukan'"></h1>
-        <a class="text-center" th:href="@{/penerbangan}">Kembali ke Daftar Penerbangan</a>
-    </div>
+<div class="jumbotron w-75 mx-auto text-center" style="background-color: #ffffff;">
+    <h1 class="text-center font-weight-bold" th:text="${msg}"></h1>
+    <a class="text-center" th:href="@{/penerbangan}">Kembali ke Daftar Penerbangan</a>
 </div>
 </body>
 </html>
